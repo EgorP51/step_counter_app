@@ -23,10 +23,11 @@ class AuthRepository {
     String password,
   ) async {
     try {
-      return await _auth.signInWithEmailAndPassword(
+      final user = await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
+      return user;
     } catch (e) {
       // TODO: add error handling
       throw e;

@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:step_counter_app/features/auth/presentation/pages/auth_page.dart';
+import 'package:step_counter_app/features/statistic/presentation/pages/statistic_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,6 +15,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(home: AuthPage());
+    final currentUser = getCurrentUser();
+
+    return MaterialApp(
+      home: currentUser != null
+          ? StatisticPage(user: currentUser)
+          : const AuthPage(),
+    );
   }
+}
+
+User? getCurrentUser() {
+  FirebaseAuth auth = FirebaseAuth.instance;
+  User? user = auth.currentUser;
+  return user;
 }
